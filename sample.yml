@@ -1,0 +1,41 @@
+# This is a sample Kubernetes Pod definition.
+# A Pod is the smallest deployable unit in Kubernetes.
+# It can run one or more containers inside it.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-pod                # Name of the pod
+  labels:                         # Labels help identify and select pods
+    app: demo                     # Key-value label used for grouping
+    tier: frontend                # Another label for classification
+
+spec:
+  restartPolicy: Always           # Restart the pod if it crashes
+
+  containers:
+    - name: nginx-container      # Name of the container inside the pod
+      image: nginx:latest        # Docker image to run in the container
+      imagePullPolicy: IfNotPresent
+
+      ports:
+        - containerPort: 80      # Port exposed by the container
+
+      env:                       # Environment variables passed to the container
+        - name: APP_ENV
+          value: "dev"
+
+      resources:                 # Resource requests and limits
+        requests:
+          cpu: 100m              # 100 milliCPU requested
+          memory: 128Mi          # 128MB memory requested
+        limits:
+          cpu: 250m
+          memory: 256Mi
+
+# To deploy this pod:
+# kubectl apply -f sample.yml
+# To check the pod:
+# kubectl get pods
+# To see pod details:
+# kubectl describe pod sample-pod
