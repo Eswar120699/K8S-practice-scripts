@@ -16,21 +16,21 @@ spec:
   containers:
     - name: nginx-container      # Name of the container inside the pod
       image: nginx:latest        # Docker image to run in the container
-      imagePullPolicy: IfNotPresent
+      imagePullPolicy: IfNotPresent # Pull the image only if it's not already present
 
       ports:
         - containerPort: 80      # Port exposed by the container
 
       env:                       # Environment variables passed to the container
-        - name: APP_ENV
-          value: "dev"
+        - name: APP_ENV  
+          value: "dev" 
 
       resources:                 # Resource requests and limits
-        requests:
+        requests:                # Resources requested by the container
           cpu: 100m              # 100 milliCPU requested
           memory: 128Mi          # 128MB memory requested
-        limits:
-          cpu: 250m
+        limits:                  # Resources limits for the container
+          cpu: 250m              
           memory: 256Mi
 
 # To deploy this pod:
