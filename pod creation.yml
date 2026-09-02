@@ -16,3 +16,9 @@ spec:
 #    containers:
 #      - image: nginx   -- image name
 #        name: cont1   -- container name
+
+#kubectl create -f pod creation.yml  -- to create pod
+#kubectl get pods  -- to check the pod
+#kubectl describe pod pod1  -- to see the details of the pod
+#kubectl get pod pod1 -o wide  -- to see the details of the pod 
+#kubectl delete -f pod creation.yml  -- to delete the pod

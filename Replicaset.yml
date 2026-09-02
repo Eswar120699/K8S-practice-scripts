@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet # A ReplicaSet ensures that a specified number of pod replicas are running at any given time. It is responsible for maintaining the desired state of the pods and automatically replacing any failed or terminated pods to meet the specified replica count.
+metadata:     # = Metadata is data that provides information about the ReplicaSet, such as its name and labels. It helps identify and organize the ReplicaSet within the Kubernetes cluster.
+  name: ib-rs  #Name of the Replicaset
+  labels:  #Labels help identify and select the replicaset
+    app: bank
+spec:  #this spec is for PODS
+  replicas: 3  #how many number of pods
+  selector:
+    matchLabels:  #Ensures only pods with label app: bank are part of this Replicaset. if there is any pod with label bank, it will be a part of this replicaset
+       app: bank
+  template:    #Ensures the pods created by this replicaset have the label app: bank
+    metadata: 
+       labels:  
+         app: bank  
+    spec:      #this spec is for Containers
+      containers:
+      - name: cont1
+        image: eswar120699/ib-image: latest # Docker image to run in the container
+
