@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: ib-deployment
   labels:
-    app: bank
+    app: ib_deploy # Specifies the label for the deployment, which can be used for selection and organization of resources.
 spec:
   replicas: 3
   selector:
-    matchLabels:
-      app: bank
+    matchLabels: 
+      app: bank # Specifies the label selector for the deployment, which determines which pods are managed by this deployment.
   template:
     metadata:
       labels:
-        app: bank
+        app: bank # Specifies the label for the pod template, which can be used for selection and organization of resources.
     spec:
       containers:
       - name: cont2

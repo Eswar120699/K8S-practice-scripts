@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parallel-job
+ 
+spec:
+  parallelism: 3 # Specifies the number of pods that can run in parallel for this job. In this case, up to 3 pods can run simultaneously. 
+  completions: 6 # Specifies the number of completed pods required to consider the job as complete.
+
+  template:
+    metadata:
+      name: parallel-job-pod
+    spec:
+      containers:
+      - name: parallel-container
+        image: busybox
+        command: ["echo", "Hello, from parallel job!"]
+      restartPolicy: Never
+  
