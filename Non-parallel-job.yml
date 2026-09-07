@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: non-parallel-job
+  labels:
+    app: non-parallel-app # Specifies the label for the job, which can be used for selection and organization of resources.
+spec:
+  completion: 3 # Specifies the number of successful completions required for the job to be considered complete.
+  template:
+    metadata:
+      name: non-parallel-job-pod 
+      labels:
+        app: sample-app # Specifies the label for the pod template, which can be used for selection and organization of resources.
+    spec:
+      containers:
+      - name: non-parallel-container
+        image: busybox
+        command: ["echo", "Hello, from non-parallel job!"]
+      restartPolicy: Never # Specifies that the pod should not be restarted if it fails, which is typical for jobs that are expected to run to completion.
+        
+

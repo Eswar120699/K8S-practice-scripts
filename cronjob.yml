@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sample-cronjob
+spec: # Specifies the desired behavior of the CronJob, including the schedule and job template.
+  schedule: "*/5 * * * *" # Specifies the cron schedule for the job. In this case, it runs every 5 minutes.
+  jobTemplate: # Specifies the template for the job that will be created by the CronJob.
+    spec:
+      template: # Specifies the pod template for the job that will be created by the CronJob.
+        spec:
+          containers:
+          - name: sample-cronjob-container
+            image: busybox
+            command: ["echo", "Hello, from CronJob!"]
+          restartPolicy: onFailure # Specifies that the pod should be restarted if it fails, which is typical for jobs that are expected to run to completion.
