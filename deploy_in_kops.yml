@@ -23,7 +23,8 @@ spec:
 # kubectl get deployments
 # kubectl get pods
 # kubectl get pods -o wide -here we can see the node name where the pod is running
-# vi deploy_in_kops.yml and change replicas=4 
+# vi deploy_in_kops.yml and change replicas=4 or 
+# kubectl scale deployment ib-deployment --replicas=4
 # kubectl delete deployment ib-deployment or kubectl delete -f deploy_in_kops.yml
 
 
