@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: ib-daemonset
+  labels:
+    app: bank # Specifies the label for the daemonset, which can be used for selection and organization of resources.
+spec:
+  selector:
+    matchLabels:
+      app: bank # Specifies the label selector for the daemonset, which determines which pods are managed by this daemonset.
+  template:
+    metadata:
+      labels:
+        app: bank # Specifies the label for the pod template, which can be used for selection and organization of resources.
+    spec:
+      containers:
+      - name: cont1
+        image: eswar120699/ib-image:latest
