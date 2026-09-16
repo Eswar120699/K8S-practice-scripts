@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ib-deployment
+  labels:
+    app: bank # Specifies the label for the deployment, which can be used for selection and organization of resources.
+spec:
+  replicas: 3
+  selector:
+    matchlabels:
+      app: bank # Specifies the label selector for the deployment, which determines which pods are managed by this deployment.
+  template:
+    metadata:
+      labels:
+        app: bank # Specifies the label for the pod template, which can be used for selection and organization of resources.  
+    spec:
+      containers:
+      - name: cont1
+        image: eswar120699/ib-image:latest
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ib-service
+spec: 
+  type: ClusterIP # Specifies the type of service, which in this case is ClusterIP, meaning the service will be accessible only within the cluster.
+  selector:
+    app: bank # Specifies the label selector for the service, which determines which pods are targeted by this service.a
+  ports:
+    - port: 80
+      targetPort: 8080 # Specifies the port on the pod that the service should forward traffic to.
