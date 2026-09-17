@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: cont1
-        image: eswar120699/ib-image:latest
-        
+        image: eswar120699/ib-image:latest   
 ---
 apiVersion: v1
 kind: Service
