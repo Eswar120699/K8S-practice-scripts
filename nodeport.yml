@@ -7,7 +7,7 @@ metadata:
 spec:
   replicas: 3
   selector:
-    matchlabels:
+    matchLabels:
       app: bank # Specifies the label selector for the deployment, which determines which pods are managed by this deployment.
   template:
     metadata:
@@ -17,17 +17,18 @@ spec:
       containers:
       - name: cont1
         image: eswar120699/ib-image:latest
-        
 ---
 apiVersion: v1
-kind: Service
+kind: service
 metadata:
   name: ib-service
-spec: 
-  type: ClusterIP # Specifies the type of service, which in this case is ClusterIP, meaning the service will be accessible only within the cluster.
+spec:
+  type: NodePort # Specifies the type of service, which in this case is NodePort, meaning the service will be accessible from outside the cluster through a specific port on each node.
   selector:
     app: bank # Specifies the label selector for the service, which determines which pods are targeted by this service.
   ports:
     - port: 80 # Specifies the port that the service will expose to other resources within the cluster.
       targetPort: 8080 # Specifies the port on the pod that the service should forward traffic to.
       protocol: TCP # Specifies the protocol for the port.
+      nodePort: 30007 # Specifies the port on each node that will be used to access the service from outside the cluster. If you didn't specify a nodePort, Kubernetes will automatically assign one from the default range (30000-32767).
+      
