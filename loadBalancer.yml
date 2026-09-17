@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ib-deployment
+  labels:
+    app: bank # Specifies the label for the deployment, which can be used for selection and organization of resources.
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bank # Specifies the label selector for the deployment, which determines which pods are managed by this deployment.
+  template:
+    metadata:
+      labels:
+        app: bank # Specifies the label for the pod template, which can be used for selection and organization of resources.  
+    spec:
+      containers:
+      - name: cont1
+        image: eswar120699/ib-image:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ib-service  
+spec:
+  type: LoadBalancer # Specifies the type of service, which in this case is LoadBalancer, meaning the service will be accessible from outside the cluster through a cloud provider's load balancer.
+  selector:
+    app: bank # Specifies the label selector for the service, which determines which pods are targeted by this service.
+  ports:
+    - port: 80 # Specifies the port that the service will expose to other resources within the cluster.
+      targetPort: 8080 # Specifies the port on the pod that the service should forward traffic to.
+      protocol: TCP # Specifies the protocol for the port.
