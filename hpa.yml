@@ -1,0 +1,20 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ib-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ib-deployment # Specifies the name of the deployment that the HPA will target for scaling.
+  minReplicas: 2 # Specifies the minimum number of replicas that the HPA will maintain for the target deployment.
+  maxReplicas: 5 # Specifies the maximum number of replicas that the HPA can scale up to for the target deployment.
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu # Specifies that the HPA will use CPU utilization as the metric for scaling.
+      target:
+        type: Utilization
+        averageUtilization: 70 # Specifies the target average CPU utilization percentage that the HPA will aim to maintain across the pods in the target deployment.
+
+        
