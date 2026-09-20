@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ib-deployment
+  labels:
+    app: bank
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bank
+  template:
+    metadata:
+      labels:
+        app: bank
+    spec:
+      containers:
+      - name: cont2
+        image: eswar120699/ib-image:latest
+        resources:
+          requests:
+            cpu: "1" # Specifies the amount of CPU resources that the container is requesting.
+            memory: "2Gi" # Specifies the amount of memory resources that the container is requesting.
+          limits:
+            cpu: "2" # Specifies the maximum amount of CPU resources that the container can use.
+            memory: "4Gi" # Specifies the maximum amount of memory resources that the container can use. 
