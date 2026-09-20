@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 20Gi # Specifies the storage capacity of the persistent volume.
+  accessModes:
+    - ReadWriteOnce # Specifies the access mode for the persistent volume, allowing it to be mounted as read-write by a single node.
+  persistentVolumeReclaimPolicy: Retain # Specifies the reclaim policy for the persistent volume, which determines what happens to the volume when it is released.
+  awsElasticBlockStore:
+    volumeID: vol-0a1b2c3d4e5f6g7h8 # Specifies the ID of the AWS EBS volume to be used as the persistent volume.
+    fsType: ext4 # Specifies the file system type for the persistent volume.
+
+
+#create a EBS volume in AWS and use the volume ID in the above configuration. The volume should be created in the same region as your Kubernetes cluster.
+#persistentVolumeReclaimPolicy:
+#Retain - means that the persistent volume will not be deleted when the associated PersistentVolumeClaim is deleted. The data on the volume will be retained, and the volume can be reused by creating a new PersistentVolumeClaim. 
+#Delete - means that the persistent volume will be deleted when the associated PersistentVolumeClaim is deleted. The data on the volume will be lost, and the volume cannot be reused.
+#Recycle - means that the persistent volume will be scrubbed (basic data deletion) and made available for reuse when the associated PersistentVolumeClaim is deleted. The volume can be reused by creating a new PersistentVolumeClaim, but the data on the volume will be lost.
+
+#accessModes:
+#ReadWriteOnce - means that the volume can be mounted as read-write by a single node.
+#ReadOnlyMany - means that the volume can be mounted as read-only by many nodes.
+#ReadWriteMany - means that the volume can be mounted as read-write by many nodes.
+#ReadWriteOncePod - means that the volume can be mounted as read-write by a single pod. This is a new access mode introduced in Kubernetes 1.22.
+
+

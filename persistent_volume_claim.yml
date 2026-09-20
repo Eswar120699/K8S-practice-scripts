@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Specifies the access mode for the persistent volume claim, allowing it to be mounted as read-write by a single node.
+  resources:
+    requests:
+      storage: 20Gi # Specifies the storage request for the persistent volume claim, which determines the amount of storage that will be allocated from the persistent volume.
+
+
