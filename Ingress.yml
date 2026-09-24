@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 # Specifies the target path for URL rewriting, where $2 refers to the second captured group in the regex pattern defined in the Ingress path. This allows for dynamic URL rewriting based on the incoming request.
+    nginx.ingress.kubernetes.io/use-regex: "true" #Enables the use of regular expressions in the Ingress path definitions, allowing for more flexible routing based on URL patterns.
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # Disables SSL redirection for the Ingress, allowing HTTP traffic to be served without being redirected to HTTPS.
+spec:
+  ingressClassName: nginx # Specifies the Ingress class to be used for this Ingress resource, indicating that it should be handled by the NGINX Ingress controller.
+  rules:
+  - host: myapp.example.com # Defines the hostname for which this Ingress rule applies
+    http:
+      paths:
+      - path: /nginx(/|$)(.*) # Defines the path pattern for routing requests to the NGINX service, using a regex to capture any sub-paths.
+        pathType: ImplementationSpecific # Specifies that the path matching behavior is determined by the Ingress controller implementation.
+        backend:
+          service:
+            name: nginx-service # Specifies the name of the backend service to which requests matching this path should be routed.
+            port:
+              number: 80 # Specifies the port on the backend service to which requests should be sent.
+      - path: /httpd(/|$)(.*) # Defines the path pattern for routing requests to the HTTPD service, using a regex to capture any sub-paths.
+        pathType: ImplementationSpecific # Specifies that the path matching behavior is determined by the Ingress controller implementation.
+        backend:
+          service:
+            name: httpd-service # Specifies the name of the backend service to which requests matching this path should be routed.
+            port:
+              number: 80 # Specifies the port on the backend service to which requests should be sent.
+      - path: / # Defines the default path pattern for routing requests that do not match any of the above paths.
+        pathType: ImplementationSpecific # Specifies that the path matching behavior is determined by the Ingress controller implementation.
+        backend:
+          service:
+            name: nginx-service # Specifies the name of the backend service to which requests matching this default path should be routed.
+            port:
+              number: 80 # Specifies the port on the backend service to which requests should be sent.
+
+
+
+#install nginx ingress controller
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
+# Verify the installation
+#kubectl get pods -n ingress-nginx
+#kubectl get svc -n ingress-nginx
+
+#kubectl apply -f Ingress_controller_nginx.yml
+#kubectl apply -f Ingress_controller_httpd.yml
+#kubectl apply -f Ingress.yml
+#kubectl get ingress
+#Here we get load balancer dns name and we can access the application using the load balancer dns name, use path /nginx for nginx and /httpd for httpd application.
+
+
