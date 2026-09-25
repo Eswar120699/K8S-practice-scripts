@@ -1,0 +1,52 @@
+https://artifacthub.io/  -we can find helm packages here
+
+https://artifacthub.io/packages/helm/prometheus-community/prometheus - to install prometheus
+https://artifacthub.io/packages/helm/grafana-community/grafana - to install grafana
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm repo list
+
+kubectl create namespace prometheus
+kubectl get ns
+kubectl get pods -n prometheus
+kubectl get all -n prometheus
+helm install prometheus prometheus-community/prometheus -n prometheus --set alertmanager.persistentVolume.storageClass="gp2" --set server.persistentVolume.storageClass="gp2"
+
+
+kubectl create namespace grafana
+kubectl get ns
+kubectl get pods -n grafana
+kubectl get all -n grafana
+helm install grafana grafana/grafana -n grafana --set persistence.storageClassName="gp2" --set persistence.enabled=true --set adminPassword='admin' --set service.type=LoadBalancer 
+take load balancer dns name and access the grafana server using the dns name, use the default username admin and password is the password we set in helm install command. 
+add datasource prometheus in grafana server using the load balancer dns name of prometheus server, username and password is admin.
+and enter the prometheus server url as http://prometheus-server.prometheus.svc.cluster.local:80 same in k8s for all
+
+now create dashboards in grafana server 
+https://grafana.com/grafana/dashboards/ - all dashboard ID's 
+
+Import Grafana dashboard -- > New -- > Import -- > 6417 -- > load -- > select Prometheus -- > import
+New -- > Import -- > 315 -- > load -- > select Prometheus -- > import
+Add 1860 port to monitor Nodes individually
+11454 -- > pv and pvc
+747 -- > pod metrics
+14623 -- > k8s overview -- use this
+10907 -- > monitor api-server
+
+systemctl start grafana-server. service ---to start grafana service or see in script
+
+9100 node exporter port number
+9090 prometheus port number
+3000 grafana port number
+
+When adding datasource in grafana server, use the prometheus server url as http://ip:9090, save and test.
+Import grafana dashboard -- > New -- > Import -- > 1860 -- > load -- > select Prometheus -- > import
+
+
+
+
+
+
+
